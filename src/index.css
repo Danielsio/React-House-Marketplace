@@ -650,6 +650,10 @@ button {
   color: #00cc66;
 }
 
+.changePersonalDetails:hover {
+  color: #12af60;
+}
+
 .profileCard {
   background-color: #ffffff;
   border-radius: 1rem;
