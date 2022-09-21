@@ -645,13 +645,13 @@ button {
 }
 
 .changePersonalDetails {
-  cursor: pointer;
   font-weight: 600;
-  color: #00cc66;
+  color: #000000;
+  text-decoration: underline;
 }
 
 .changePersonalDetails:hover {
-  color: #12af60;
+  cursor: pointer;
 }
 
 .profileCard {

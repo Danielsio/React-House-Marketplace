@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { updateDoc, doc } from "firebase/firestore"
 import { db } from "../firebase.config"
 import { toast } from "react-toastify"
+import { ReactComponent as EditIcon } from "../assets/svg/editIcon.svg"
 
 function Profile() {
   const auth = getAuth()
@@ -57,7 +58,7 @@ function Profile() {
       </header>
       <main>
         <div className="profileDetailsHeader">
-          <p className="profileDetailsText">Personal Details</p>
+          <p className="personalDetailsText">Personal Details</p>
           <p
             className="changePersonalDetails"
             onClick={() => {
@@ -65,7 +66,11 @@ function Profile() {
               setChangeDetails((prevState) => !prevState)
             }}
           >
-            {changeDetails ? "done" : "edit profile"}
+            {changeDetails ? (
+              "Done"
+            ) : (
+              <EditIcon fill="#000000" width="20px" height="20px" />
+            )}
           </p>
         </div>
         <div className="profileCard">

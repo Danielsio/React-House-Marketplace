@@ -1,68 +1,69 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
-import visibilityIcon from "../assets/svg/visibilityIcon.svg";
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg"
+import visibilityIcon from "../assets/svg/visibilityIcon.svg"
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
-} from "firebase/auth";
-import { db } from "../firebase.config";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { toast } from "react-toastify";
+} from "firebase/auth"
+import { db } from "../firebase.config"
+import { doc, setDoc, serverTimestamp } from "firebase/firestore"
+import { toast } from "react-toastify"
+import OAuth from "../components/OAuth"
 
 function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-  });
-  const { name, email, password } = formData;
+  })
+  const { name, email, password } = formData
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
-    }));
-  };
+    }))
+  }
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const auth = getAuth();
+      const auth = getAuth()
 
-      console.log("creating user");
+      console.log("creating user")
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
-      );
+      )
 
-      console.log(userCredential);
+      console.log(userCredential)
 
-      const user = userCredential.user;
-      console.log("username = " + user);
+      const user = userCredential.user
+      console.log("username = " + user)
       updateProfile(auth.currentUser, {
         displayName: name,
-      });
+      })
 
-      const formDataCopy = { ...formData };
-      delete formDataCopy.password;
+      const formDataCopy = { ...formData }
+      delete formDataCopy.password
 
-      console.log(formData);
-      formDataCopy.timestamp = serverTimestamp();
+      console.log(formData)
+      formDataCopy.timestamp = serverTimestamp()
 
-      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      await setDoc(doc(db, "users", user.uid), formDataCopy)
 
-      navigate("/");
+      navigate("/")
     } catch (error) {
-      toast.error("Something Went Wrong, Please Try Again Later.");
+      toast.error("Something Went Wrong, Please Try Again Later.")
     }
-  };
+  }
 
   return (
     <>
@@ -70,7 +71,6 @@ function SignUp() {
         <header>
           <p className="pageHeader">Welcome Back!</p>
         </header>
-
         <form onSubmit={onSubmit}>
           <input
             type="text"
@@ -118,15 +118,13 @@ function SignUp() {
             </button>
           </div>
         </form>
-
-        {/* Google OAuth */}
-
+        <OAuth />
         <Link to="/sign-in" className="registerLink">
           Sign In Instead
         </Link>
       </div>
     </>
-  );
+  )
 }
 
-export default SignUp;
+export default SignUp
